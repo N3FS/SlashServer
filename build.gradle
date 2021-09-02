@@ -1,63 +1,32 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
-
 plugins {
-    id "java"
-    id "idea"
-    id "com.github.johnrengelman.shadow" version "2.0.2"
-    id "ninja.miserable.blossom" version "1.0.1"
+    id 'java-library'
+    id 'net.kyori.indra' version '2.0.6'
+    id 'net.kyori.indra.git' version '2.0.6'
+    id 'net.kyori.blossom' version '1.3.0'
 }
 
-def buildNumber = System.env.BUILD_NUMBER ?: "SNAPSHOT"
-
-def projectId = "slashserver"
-project.group = "sr.will"
-project.version = "1.0-" + buildNumber
-project.description = "Adds server aliases"
-def projectUrl = "https://github.com/Willsr71/SlashServer"
-def projectAuthor = "Willsr71"
-def projectSite = "https://noxal.net"
-
-def jarName = "${projectId}-${project.version.toString()}.jar"
+group 'uk.co.n3fs.mc'
+version '2.0.0-SNAPSHOT'
+description 'A plugin to add slash aliases for servers.'
 
 repositories {
-    jcenter()
-
-    maven { url "https://repo.velocitypowered.com/snapshots/" }
+    maven { url 'https://nexus.velocitypowered.com/repository/maven-public/' }
 }
 
 dependencies {
-    compileOnly "com.velocitypowered:velocity-api:1.0-SNAPSHOT"
+    compileOnly 'com.velocitypowered:velocity-api:3.0.1'
 }
 
 blossom {
-    def location = "src/main/java/sr/will/slashserver/PluginInfo.java"
+    def commit = indraGit.isPresent() ? indraGit.commit().abbreviate(7).name() : 'unknown'
+    def fullVersion = "${version}".replace('-SNAPSHOT', "-SNAPSHOT-${commit}")
 
-    replaceToken "@name@", project.name, location
-    replaceToken "@id@", projectId, location
-    replaceToken "@version@", project.version, location
-    replaceToken "@description@", project.description, location
-    replaceToken "@url@", projectUrl, location
-    replaceToken "@author@", projectAuthor, location
-    replaceToken "@website@", projectSite, location
+    replaceToken '@version@', fullVersion
 }
 
-jar {
-    archiveName jarName
-}
-
-shadowJar {
-    archiveName jarName
-}
-
-build {
-    dependsOn clean
-    dependsOn jar
-    dependsOn shadowJar
-
-    jar.mustRunAfter clean
-    shadowJar.mustRunAfter jar
+indra {
+    javaVersions {
+        target 8
+        minimumToolchain 16
+    }
 }

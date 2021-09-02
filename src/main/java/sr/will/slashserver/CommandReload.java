@@ -1,13 +1,13 @@
 package sr.will.slashserver;
 
-import com.velocitypowered.api.command.Command;
-import com.velocitypowered.api.command.CommandSource;
-import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.optional.qual.MaybePresent;
+import com.velocitypowered.api.command.SimpleCommand;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-public class CommandReload implements Command {
+public class CommandReload implements SimpleCommand {
+    private static final TextComponent RELOAD_MESSAGE = Component.text("Plugin reloaded!", NamedTextColor.GREEN);
+
     private SlashServer plugin;
 
     public CommandReload(SlashServer plugin) {
@@ -15,13 +15,13 @@ public class CommandReload implements Command {
     }
 
     @Override
-    public void execute(@MaybePresent CommandSource cs, @NonNull @MaybePresent String[] args) {
+    public void execute(Invocation invocation) {
         plugin.reload();
-        cs.sendMessage(TextComponent.of("Plugin reloaded!", TextColor.GREEN));
+        invocation.source().sendMessage(RELOAD_MESSAGE);
     }
 
     @Override
-    public boolean hasPermission(@MaybePresent CommandSource cs, @NonNull @MaybePresent String[] args) {
-        return cs.hasPermission("slashserver.reload");
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("slashserver.reload");
     }
 }

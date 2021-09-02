@@ -10,8 +10,16 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-@Plugin(id = PluginInfo.ID, name = PluginInfo.NAME, version = PluginInfo.VERSION, description = PluginInfo.DESCRIPTION)
+@Plugin(
+        id = "slashserver",
+        name = "SlashServer",
+        version = "${fullVersion}",
+        description = "A plugin to add slash aliases for servers.",
+        authors = {"Willsr71", "mdcfe"},
+        url = "https://github.com/N3FS/SlashServer"
+)
 public class SlashServer {
     @Inject
     private ProxyServer proxy;
@@ -19,7 +27,7 @@ public class SlashServer {
 
     @Subscribe
     public void onProxyInitialize(ProxyInitializeEvent event) {
-        proxy.getCommandManager().register(new CommandReload(this), "ssreload");
+        proxy.getCommandManager().register("ssreload", new CommandReload(this));
 
         reload();
     }
@@ -29,8 +37,8 @@ public class SlashServer {
         registeredCommands.clear();
 
         for (RegisteredServer server : proxy.getAllServers()) {
-            String name = server.getServerInfo().getName().toLowerCase();
-            proxy.getCommandManager().register(new CommandServer(server), name);
+            String name = server.getServerInfo().getName().toLowerCase(Locale.ROOT);
+            proxy.getCommandManager().register(name, new CommandServer(server));
             registeredCommands.add(name);
         }
     }

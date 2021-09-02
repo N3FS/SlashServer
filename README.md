@@ -1,14 +1,19 @@
-SlashServer
-===========
+# SlashServer
+
 [![Build Status](https://ci.noxal.net/job/SlashServer/badge/icon)](https://ci.noxal.net/job/SlashServer/)
-![Velocity v1.0](https://img.shields.io/badge/Velocity-v1.0-green.svg)
-![Java JDK v1.8](https://img.shields.io/badge/Java%20JDK-v1.8-blue.svg)
+![Velocity 1.0](https://img.shields.io/badge/Velocity-3.0.0-green.svg)
 
-This plugin adds /server command aliases for velocity, for example  
-/lobby is aliased to /server lobby  
-/survival is aliased to /server survival  
-Server commands require the permission nodes of server.\<name\>
+## Usage
 
-Note: Server commands and permission nodes are the lowercase form of the server name
+This plugin adds /server command aliases on Velocity. Each server command requires the `slashserver.<name>` permission.
 
-/ssreload reloads the plugin and required the permission node slashserver.reload
+For example:  
+- `/lobby` is an alias of `/server lobby` and requires the `slashserver.lobby` permission.
+- `/survival` is aliased to `/server survival` and requires the `slashserver.survival` permission.
+
+In addition, you can reload the plugin using the `/ssreload` command, which requires the `slashserver.reload` permission
+and will re-register the server commands.
+
+## Building
+
+Clone the repo locally, then run `gradlew build`.
