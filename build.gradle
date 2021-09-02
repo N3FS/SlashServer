@@ -9,6 +9,9 @@ group 'uk.co.n3fs.mc'
 version '2.0.0-SNAPSHOT'
 description 'A plugin to add slash aliases for servers.'
 
+def commit = indraGit.isPresent() ? indraGit.commit().abbreviate(7).name() : 'unknown'
+def fullVersion = "${version}".replace('-SNAPSHOT', "-SNAPSHOT-${commit}")
+
 repositories {
     maven { url 'https://nexus.velocitypowered.com/repository/maven-public/' }
 }
@@ -18,9 +21,6 @@ dependencies {
 }
 
 blossom {
-    def commit = indraGit.isPresent() ? indraGit.commit().abbreviate(7).name() : 'unknown'
-    def fullVersion = "${version}".replace('-SNAPSHOT', "-SNAPSHOT-${commit}")
-
     replaceToken '@version@', fullVersion
 }
 
@@ -29,4 +29,8 @@ indra {
         target 8
         minimumToolchain 16
     }
+}
+
+tasks.withType(Jar.class).configureEach {
+    archiveVersion.set("$fullVersion")
 }
