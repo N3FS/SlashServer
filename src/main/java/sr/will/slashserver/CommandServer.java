@@ -33,7 +33,7 @@ public class CommandServer implements SimpleCommand {
     public void execute(Invocation invocation) {
         final CommandSource source = invocation.source();
 
-        if (!(source instanceof ConsoleCommandSource)) {
+        if (!(source instanceof Player)) {
             source.sendMessage(PLAYERS_ONLY);
             return;
         }
