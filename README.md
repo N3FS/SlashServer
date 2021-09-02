@@ -1,7 +1,7 @@
 # SlashServer
 
-[![Build Status](https://ci.noxal.net/job/SlashServer/badge/icon)](https://ci.noxal.net/job/SlashServer/)
-![Velocity 1.0](https://img.shields.io/badge/Velocity-3.0.0-green.svg)
+[![Build Status](https://img.shields.io/github/workflow/status/N3FS/SlashServer/Build%20SlashServer/master?logo=github&label=build)](https://github.com/N3FS/SlashServer/actions/workflows/build.yml)
+![Velocity 1.0](https://img.shields.io/badge/Velocity-3.0.0-0288d1.svg)
 
 ## Usage
 
@@ -16,4 +16,4 @@ and will re-register the server commands.
 
 ## Building
 
-Clone the repo locally, then run `gradlew build`.
+Clone the repo locally, then run `gradlew build`. The plugin jar can then be found under `build/libs/SlashServer-<version>.jar`.
